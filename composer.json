@@ -5,6 +5,8 @@
     }
   },
   "require": {
-    "monolog/monolog": "^2.9"
+    "monolog/monolog": "^2.9",
+    "catfan/medoo": "^2.1",
+    "nesbot/carbon": "^2.72"
   }
 }
