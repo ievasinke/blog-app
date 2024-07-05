@@ -7,6 +7,8 @@ use App\Controllers\Article\IndexArticleController;
 use App\Controllers\Article\ShowArticleController;
 use DI\ContainerBuilder;
 use Medoo\Medoo;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 $containerBuilder = new ContainerBuilder();
 
@@ -17,8 +19,15 @@ $containerBuilder->addDefinitions([
             'database' => 'storage/database.sqlite'
         ]);
     },
+    Logger::class => function () {
+        $log = new Logger('app');
+        $logFile = __DIR__ . '/storage/logs/app.log';
+        $log->pushHandler(new StreamHandler($logFile, Logger::DEBUG));
+        return $log;
+    },
     ArticleRepository::class => DI\autowire(ArticleRepository::class),
-    ArticleService::class => DI\autowire(ArticleService::class),
+    ArticleService::class => DI\create(ArticleService::class)
+        ->constructor(DI\get(ArticleRepository::class), DI\get(Logger::class)),
     IndexArticleController::class => DI\autowire(IndexArticleController::class),
     ShowArticleController::class => DI\autowire(ShowArticleController::class),
     CreateArticleController::class => DI\autowire(CreateArticleController::class),

@@ -12,6 +12,7 @@ use Twig\Loader\FilesystemLoader;
 use FastRoute\RouteCollector;
 use FastRoute\Dispatcher;
 
+
 $loader = new FilesystemLoader(__DIR__ . '/views');
 $twig = new Environment($loader, ['cache' => false]);
 

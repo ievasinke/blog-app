@@ -5,3 +5,5 @@ storage/database.sqlite
 .DS_Store
 
 .idea/
+
+storage/logs/app.log
