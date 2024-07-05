@@ -15,8 +15,8 @@ author VARCHAR(255) NOT NULL,
 title TEXT NOT NULL,
 content TEXT NOT NULL,
 created_at DATETIME NOT NULL,
-updated_at DATETIME NOT NULL,
-deleted_at DATETIME NOT NULL
+updated_at DATETIME,
+deleted_at DATETIME
 )");
 
 echo "Database schema initialized.\n";
