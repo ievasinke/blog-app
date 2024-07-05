@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 namespace App\Repositories;
+
 use App\Models\Article;
 use Carbon\Carbon;
 use Medoo\Medoo;
@@ -14,7 +15,11 @@ class ArticleRepository
         $this->database = $database;
     }
 
-    public function create(string $author, string $title, string $content): int
+    public function create(
+        string $author,
+        string $title,
+        string $content
+    ): int
     {
         $this->database->insert(
             'articles',
@@ -31,8 +36,12 @@ class ArticleRepository
     public function getArticles(): array
     {
         $articlesData = $this->database->select(
-            'articles', '*',
-            ['deleted_at' => null]
+            'articles',
+            '*',
+            [
+                'deleted_at' => null,
+                'ORDER' => ['created_at' => 'DESC']
+            ]
         );
         $articles = [];
         foreach ($articlesData as $article) {
@@ -43,11 +52,19 @@ class ArticleRepository
 
     public function getArticle(int $id): ?Article
     {
-        $article = $this->database->select('articles', '*', ['id' => $id]);
+        $article = $this->database->select(
+            'articles',
+            '*',
+            ['id' => $id]);
         return $article ? $this->retrieveArticle($article) : null;
     }
 
-    public function updateArticle(int $id, string $author, string $title, string $content): void
+    public function updateArticle(
+        int $id,
+        string $author,
+        string $title,
+        string $content
+    ): void
     {
         $this->database->update(
             'articles',

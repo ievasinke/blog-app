@@ -1,12 +1,17 @@
 {% extends 'layouts/app.html.twig' %}
 
 {% block content %}
-    <h1 class="text-2xl font-bold mb-4">...</h1>
-    <a href="/articles/update/{{ article.id }}" class="bg-blue-500 text-white px-4 py-2 rounded">Edit</a>
-    <a href="/articles/delete/{{ article.id }}" class="bg-blue-500 text-white px-4 py-2 rounded">Delete</a>
+    <div class="container mx-auto px-4">
+        <h1 class="text-4xl font-bold mb-6">{{ article.title }}</h1>
 
-    <p class="bg-white mb-2"><span class="font-semibold">Title:</span> {{ article.title }}</p>
-    <p class="bg-white mb-2"><span class="font-semibold">By</span> {{ article.author }}</p>
-    <p class="bg-white mb-4"><span
-                class="font-semibold">..</span> {{ article.content }}</p>
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+            <p class="mb-2"><span class="font-semibold">Author:</span> {{ article.author }}</p>
+            <p class="mb-2"><span class="font-semibold">Content:</span> {{ article.content }}</p>
+        </div>
+
+        <div class="flex space-x-4">
+            <a href="/articles/update/{{ article.id }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Edit</a>
+            <a href="/articles/delete/{{ article.id }}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200">Delete</a>
+        </div>
+    </div>
 {% endblock %}

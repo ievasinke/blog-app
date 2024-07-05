@@ -1,13 +1,24 @@
- <h1>Create Article</h1>
-    <form action="/articles/create" method="POST">
-        <label for="author">Author:</label>
-        <input type="text" id="author" name="author" required>
-        <br>
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required>
-        <br>
-        <label for="content">Content:</label>
-        <textarea id="content" name="content" required></textarea>
-        <br>
-        <button type="submit">Create</button>
-    </form>
+{% block content %}
+    <div class="container mx-auto px-4">
+        <h1 class="text-4xl font-bold mb-6">Create Article</h1>
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <form action="/articles/create" method="POST">
+                <div class="mb-4">
+                    <label for="author" class="block text-gray-700 font-semibold">Author:</label>
+                    <input type="text" id="author" name="author" required class="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500">
+                </div>
+                <div class="mb-4">
+                    <label for="title" class="block text-gray-700 font-semibold">Title:</label>
+                    <input type="text" id="title" name="title" required class="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500">
+                </div>
+                <div class="mb-4">
+                    <label for="content" class="block text-gray-700 font-semibold">Content:</label>
+                    <textarea id="content" name="content" required rows="5" class="border border-gray-300 px-3 py-2 rounded-md w-full resize-none focus:outline-none focus:border-blue-500"></textarea>
+                </div>
+                <div class="mt-6">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-200">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
