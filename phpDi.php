@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use App\Repositories\ArticleRepository;
 use App\Services\ArticleService;
@@ -13,21 +13,27 @@ use Monolog\Logger;
 $containerBuilder = new ContainerBuilder();
 
 $containerBuilder->addDefinitions([
-    Medoo::class => function () {
+    Medoo::class => function (): Medoo {
         return new Medoo([
             'type' => 'sqlite',
             'database' => 'storage/database.sqlite'
         ]);
     },
-    Logger::class => function () {
+    Logger::class => function (): Logger {
         $log = new Logger('app');
         $logFile = __DIR__ . '/storage/logs/app.log';
-        $log->pushHandler(new StreamHandler($logFile, Logger::DEBUG));
+        $log->pushHandler(new StreamHandler(
+            $logFile,
+            Logger::DEBUG
+            ));
         return $log;
     },
     ArticleRepository::class => DI\autowire(ArticleRepository::class),
     ArticleService::class => DI\create(ArticleService::class)
-        ->constructor(DI\get(ArticleRepository::class), DI\get(Logger::class)),
+        ->constructor(
+            DI\get(ArticleRepository::class),
+            DI\get(Logger::class)
+        ),
     IndexArticleController::class => DI\autowire(IndexArticleController::class),
     ShowArticleController::class => DI\autowire(ShowArticleController::class),
     CreateArticleController::class => DI\autowire(CreateArticleController::class),

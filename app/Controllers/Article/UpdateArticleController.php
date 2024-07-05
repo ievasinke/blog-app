@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controllers\Article;
 
@@ -31,7 +31,12 @@ class UpdateArticleController
         $title = (string)$_POST['title'] ?? null;
         $content = (string)$_POST['content'] ?? null;
 
-        $this->articleService->editArticle($id, $author, $title, $content);
+        $this->articleService->editArticle(
+            $id,
+            $author,
+            $title,
+            $content
+        );
         return new RedirectResponse('/articles/' . $id);
     }
 }

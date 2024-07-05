@@ -12,6 +12,7 @@ class IndexArticleController
     {
         $this->articleService = $articleService;
     }
+
     public function index(): Response
     {
         $articles = $this->articleService->getAll();

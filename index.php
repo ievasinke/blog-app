@@ -20,7 +20,11 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $routes = include('routes.php');
     foreach ($routes as $route) {
         [$method, $path, $controller] = $route;
-        $r->addRoute($method, $path, $controller);
+        $r->addRoute(
+            $method,
+            $path,
+            $controller
+        );
     }
 });
 
@@ -34,7 +38,10 @@ if (false !== $pos = strpos($uri, '?')) {
 }
 $uri = rawurldecode($uri);
 
-$routeInfo = $dispatcher->dispatch($httpMethod, $uri);
+$routeInfo = $dispatcher->dispatch(
+    $httpMethod,
+    $uri
+);
 switch ($routeInfo[0]) {
     case Dispatcher::NOT_FOUND:
         echo '404 Not Found';
