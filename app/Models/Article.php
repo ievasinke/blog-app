@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Models;
 
@@ -10,18 +10,18 @@ class Article
     private string $author;
     private string $title;
     private string $content;
-    private string $createdAt;
-    private string $updatedAt;
-    private string $deletedAt;
+    private Carbon $createdAt;
+    private ?Carbon $updatedAt;
+    private ?Carbon $deletedAt;
 
     public function __construct(
         int     $id,
         string  $author,
         string  $title,
         string  $content,
-        ?string $createdAt = null,
-        ?string $updatedAt = null,
-        ?string $deletedAt = null
+        ?Carbon $createdAt = null,
+        ?Carbon $updatedAt = null,
+        ?Carbon $deletedAt = null
     )
     {
         $this->id = $id;
@@ -53,17 +53,17 @@ class Article
         return $this->content;
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt(): Carbon
     {
         return $this->createdAt;
     }
 
-    public function getUpdatedAt(): string
+    public function getUpdatedAt(): ?Carbon
     {
         return $this->updatedAt;
     }
 
-    public function getDeletedAt(): string
+    public function getDeletedAt(): ?Carbon
     {
         return $this->deletedAt;
     }
