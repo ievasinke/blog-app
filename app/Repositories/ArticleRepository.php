@@ -63,6 +63,19 @@ class ArticleRepository
         );
     }
 
+    public function markAsDeleted(int $id): void
+    {
+        $this->database->update(
+            'articles',
+            [
+                'deleted_at' => Carbon::now()->toIso8601String()
+            ],
+            [
+                'id' => $id
+            ]
+        );
+    }
+
     private function retrieveArticle(array $item): Article
     {
         if (isset($item[0]) && is_array($item[0])) {

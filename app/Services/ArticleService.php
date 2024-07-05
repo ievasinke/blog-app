@@ -31,4 +31,9 @@ class ArticleService
     public function editArticle(int $id, string $author, string $title, string $content): void{
         $this->articleRepository->updateArticle($id, $author, $title, $content);
     }
+
+    public function deleteArticle(int $id): void
+    {
+        $this->articleRepository->markAsDeleted($id);
+    }
 }
