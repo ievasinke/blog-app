@@ -13,6 +13,11 @@ class ArticleService
         $this->articleRepository = $articleRepository;
     }
 
+    public function createArticle(string $author, string $title, string $content): int
+    {
+        return $this->articleRepository->create($author, $title, $content);
+    }
+
     public function getAll(): array
     {
         return $this->articleRepository->getArticles();
@@ -20,7 +25,6 @@ class ArticleService
 
     public function showArticle(int $id): Article
     {
-        $article = $this->articleRepository->getArticle($id);
-        return $article;
+        return $this->articleRepository->getArticle($id);
     }
 }

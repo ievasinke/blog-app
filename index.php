@@ -7,13 +7,13 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
+use FastRoute\RouteCollector;
+use FastRoute\Dispatcher;
 
 $loader = new FilesystemLoader(__DIR__ . '/views');
-$twig = new Environment($loader, [
-    'cache' => false,
-]);
+$twig = new Environment($loader, ['cache' => false]);
 
-$dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
+$dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $routes = include('routes.php');
     foreach ($routes as $route) {
         [$method, $path, $controller] = $route;
@@ -33,14 +33,14 @@ $uri = rawurldecode($uri);
 
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 switch ($routeInfo[0]) {
-    case FastRoute\Dispatcher::NOT_FOUND:
+    case Dispatcher::NOT_FOUND:
         echo '404 Not Found';
         break;
-    case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+    case Dispatcher::METHOD_NOT_ALLOWED:
         $allowedMethods = $routeInfo[1];
         echo '405 Method Not Allowed';
         break;
-    case FastRoute\Dispatcher::FOUND:
+    case Dispatcher::FOUND:
         [$controller, $method] = $routeInfo[1];
         $vars = $routeInfo[2];
 
@@ -60,6 +60,7 @@ switch ($routeInfo[0]) {
             echo $twig->render($response->getTemplate() . '.html.twig', $response->getData());
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             echo ':?';
+//            echo $e->getMessage();
         }
         break;
 }

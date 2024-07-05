@@ -14,6 +14,20 @@ class ArticleRepository
         $this->database = $database;
     }
 
+    public function create(string $author, string $title, string $content): int
+    {
+        $this->database->insert(
+            'articles',
+            [
+                'author' => $author,
+                'title' => $title,
+                'content' => $content,
+                'created_at' => Carbon::now()->toIso8601String(),
+            ]
+        );
+        return (int)$this->database->id();
+    }
+
     public function getArticles(): array
     {
         $articlesData = $this->database->select(
