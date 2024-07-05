@@ -70,6 +70,7 @@ switch ($routeInfo[0]) {
             }
 
             if ($response instanceof RedirectResponse) {
+                var_dump($response->getLocation());
                 header('Location: ' . $response->getLocation());
             }
         } catch (LoaderError|RuntimeError|SyntaxError $e) {

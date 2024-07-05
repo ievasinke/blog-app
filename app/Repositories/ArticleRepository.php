@@ -47,6 +47,22 @@ class ArticleRepository
         return $article ? $this->retrieveArticle($article) : null;
     }
 
+    public function updateArticle(int $id, string $author, string $title, string $content): void
+    {
+        $this->database->update(
+            'articles',
+            [
+                'author' => $author,
+                'title' => $title,
+                'content' => $content,
+                'updated_at' => Carbon::now()->toIso8601String()
+            ],
+            [
+                'id' => $id
+            ]
+        );
+    }
+
     private function retrieveArticle(array $item): Article
     {
         if (isset($item[0]) && is_array($item[0])) {
