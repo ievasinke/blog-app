@@ -35,7 +35,8 @@ class ArticleRepository
 
     private function retrieveArticle(array $item): Article
     {
-            $item = array_merge([ // TODO remove
+        if (isset($item[0])) $item = $item[0];
+        $item = array_merge([ // TODO remove
                 'id' => 0,
                 'author' => '',
                 'title' => '',
@@ -43,7 +44,7 @@ class ArticleRepository
                 'created_at' => null,
                 'updated_at' => null,
                 'deleted_at' => null,
-            ], $item[0]);
+            ], $item);
         return new Article(
             (int)$item['id'],
             $item['author'],
