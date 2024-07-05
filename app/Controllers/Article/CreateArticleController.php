@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Article;
 
+use App\RedirectResponse;
 use App\Response;
 use App\Services\ArticleService;
 
@@ -22,21 +23,20 @@ class CreateArticleController
         );
     }
 
-    public function create(): ?Response
+    public function create(): RedirectResponse
     {
-        $author = (string)$_POST['author'] ?? null;
-        $title = (string)$_POST['title'] ?? null;
-        $content = (string)$_POST['content'] ?? null;
+//        if (empty($author) || empty($title) || empty($content)) {
+//            return new Response(
+//                '/articles/create',
+//                ['message' => 'All fields are required']
+//            );
+//        }
 
-        if (empty($author) || empty($title) || empty($content)) {
-            return new Response(
-                '/articles/create',
-                ['message' => 'All fields are required']
-            );
-        }
-
-        $articleId = $this->articleService->createArticle($author, $title, $content);
-        header("Location: /articles/" . $articleId, true, 301);
-        return null;
+        $articleId = $this->articleService->createArticle(
+            $_POST['author'],
+            $_POST['title'],
+            $_POST['content']
+        );
+        return new RedirectResponse('/articles/' . $articleId);
     }
 }

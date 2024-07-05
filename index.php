@@ -2,6 +2,8 @@
 
 require_once 'vendor/autoload.php';
 
+use App\RedirectResponse;
+use App\Response;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -53,11 +55,23 @@ switch ($routeInfo[0]) {
             return $value;
         }, $vars, array_keys($vars));
 
-        /** @var \App\Response $response */
-        $response = $controllerInstance->$method(...array_values($vars));
+        /** @var Response $response
+         ** @var RedirectResponse $response
+         **/
 
+        $response = $controllerInstance->$method(...array_values($vars));
         try {
-            echo $twig->render($response->getTemplate() . '.html.twig', $response->getData());
+
+            if ($response instanceof Response) {
+                echo $twig->render(
+                    $response->getTemplate() . '.html.twig',
+                    $response->getData()
+                );
+            }
+
+            if ($response instanceof RedirectResponse) {
+                header('Location: ' . $response->getLocation());
+            }
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             echo ':?';
 //            echo $e->getMessage();
