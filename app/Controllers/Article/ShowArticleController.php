@@ -3,18 +3,23 @@
 namespace App\Controllers\Article;
 
 use App\Response;
-use App\Services\ArticleService;
+use App\Services\Article\ShowArticleService;
+use Exception;
 
 class ShowArticleController
 {
-    private ArticleService $articleService;
-    public function __construct(ArticleService $articleService)
+    private ShowArticleService $showArticleService;
+    public function __construct(ShowArticleService $showArticleService)
     {
-        $this->articleService = $articleService;
+        $this->showArticleService = $showArticleService;
     }
+
+    /**
+     * @throws Exception
+     */
     public function show(int $id): Response
     {
-        $article = $this->articleService->showArticle($id);
+        $article = $this->showArticleService->showArticle($id);
         return new Response(
             '/articles/show',
             ['article' => $article]

@@ -3,19 +3,23 @@
 namespace App\Controllers\Article;
 
 use App\Response;
-use App\Services\ArticleService;
+use App\Services\Article\IndexArticleService;
+use Exception;
 
 class IndexArticleController
 {
-    private ArticleService $articleService;
-    public function __construct(ArticleService $articleService)
+    private IndexArticleService $indexArticleService;
+    public function __construct(IndexArticleService $indexArticleService)
     {
-        $this->articleService = $articleService;
+        $this->indexArticleService = $indexArticleService;
     }
 
+    /**
+     * @throws Exception
+     */
     public function index(): Response
     {
-        $articles = $this->articleService->getAll();
+        $articles = $this->indexArticleService->getAll();
         return new Response(
             '/articles/index',
             ['articles' => $articles]

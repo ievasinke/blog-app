@@ -3,21 +3,25 @@
 namespace App\Controllers\Article;
 
 use App\RedirectResponse;
-use App\Services\ArticleService;
+use App\Services\Article\DeleteArticleService;
+use Exception;
 
 class DeleteArticleController
 {
-    private ArticleService $articleService;
+    private DeleteArticleService $deleteArticleService;
 
-    public function __construct(ArticleService $articleService)
+    public function __construct(DeleteArticleService $deleteArticleService)
     {
-        $this->articleService = $articleService;
+        $this->deleteArticleService = $deleteArticleService;
     }
 
+    /**
+     * @throws Exception
+     */
     public function delete(int $id): RedirectResponse
     {
 
-        $this->articleService->deleteArticle($id);
+        $this->deleteArticleService->deleteArticle($id);
         return new RedirectResponse('/articles');
     }
 }

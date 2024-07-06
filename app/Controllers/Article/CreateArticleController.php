@@ -4,15 +4,15 @@ namespace App\Controllers\Article;
 
 use App\RedirectResponse;
 use App\Response;
-use App\Services\ArticleService;
+use App\Services\Article\CreateArticleService;
 
 class CreateArticleController
 {
-    private ArticleService $articleService;
+    private CreateArticleService $createArticleService;
 
-    public function __construct(ArticleService $articleService)
+    public function __construct(CreateArticleService $createArticleService)
     {
-        $this->articleService = $articleService;
+        $this->createArticleService = $createArticleService;
     }
 
     public function createForm(): Response
@@ -32,7 +32,7 @@ class CreateArticleController
 //            );
 //        }
 
-        $articleId = $this->articleService->createArticle(
+        $articleId = $this->createArticleService->createArticle(
             $_POST['author'],
             $_POST['title'],
             $_POST['content']
