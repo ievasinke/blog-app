@@ -4,14 +4,21 @@ namespace App\Controllers\Article;
 
 use App\Response;
 use App\Services\Article\ShowArticleService;
+use App\Services\Comment\IndexCommentService;
 use Exception;
 
 class ShowArticleController
 {
     private ShowArticleService $showArticleService;
-    public function __construct(ShowArticleService $showArticleService)
+    private IndexCommentService $indexCommentService;
+
+    public function __construct(
+        ShowArticleService  $showArticleService,
+        IndexCommentService $indexCommentService
+    )
     {
         $this->showArticleService = $showArticleService;
+        $this->indexCommentService = $indexCommentService;
     }
 
     /**
@@ -20,9 +27,13 @@ class ShowArticleController
     public function show(int $id): Response
     {
         $article = $this->showArticleService->showArticle($id);
+        $comments = $this->indexCommentService->getAll($id);
         return new Response(
             '/articles/show',
-            ['article' => $article]
+            [
+                'article' => $article,
+                'comments' => $comments
+            ]
         );
     }
 }

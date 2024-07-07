@@ -83,7 +83,7 @@ switch ($routeInfo[0]) {
             }
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             echo ':?';
-//            echo $e->getMessage();
+            echo $e->getMessage();
         }
         break;
 }

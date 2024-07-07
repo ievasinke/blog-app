@@ -1,7 +1,6 @@
 <?php declare(strict_types=1);
 
 use App\Repositories\ArticleRepository;
-use App\Services\ArticleService;
 use App\Controllers\Article\CreateArticleController;
 use App\Controllers\Article\IndexArticleController;
 use App\Controllers\Article\ShowArticleController;
@@ -12,6 +11,12 @@ use App\Services\Article\ShowArticleService;
 use App\Services\Article\UpdateArticleService;
 use App\Services\Article\DeleteArticleService;
 use App\Services\Article\IndexArticleService;
+use App\Repositories\Comment\CommentRepositoryInterface;
+use App\Repositories\Comment\CommentRepository;
+use App\Controllers\Comment\CreateCommentController;
+use App\Controllers\Comment\IndexCommentController;
+use App\Services\Comment\CreateCommentService;
+use App\Services\Comment\IndexCommentService;
 use DI\ContainerBuilder;
 use Medoo\Medoo;
 use Monolog\Handler\StreamHandler;
@@ -66,6 +71,24 @@ $containerBuilder->addDefinitions([
     CreateArticleController::class => DI\autowire(CreateArticleController::class),
     UpdateArticleController::class => DI\autowire(UpdateArticleController::class),
     DeleteArticleController::class => DI\autowire(DeleteArticleController::class),
+    CommentRepositoryInterface::class => DI\autowire(CommentRepository::class),
+    CommentRepository::class => DI\autowire(CommentRepository::class),
+    CreateCommentService::class  => DI\create(CreateCommentService::class)
+        ->constructor(
+            DI\get(CommentRepositoryInterface::class),
+            DI\get(Logger::class)
+        ),
+    IndexCommentService::class => DI\create(IndexCommentService::class)
+        ->constructor(
+            DI\get(CommentRepositoryInterface::class),
+            DI\get(Logger::class)
+        ),
+    CreateCommentController::class  => DI\create(CreateCommentController::class)
+        ->constructor(
+            DI\get(CreateCommentService::class),
+            DI\get(Logger::class)
+        ),
+    IndexCommentController::class => DI\autowire(IndexCommentController::class),
     ]);
 
 return $containerBuilder->build();
