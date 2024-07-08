@@ -29,4 +29,15 @@ deleted_at DATETIME
 FOREIGN KEY (article_id) REFERENCES articles(id)
 )");
 
+$database->query("CREATE TABLE IF NOT EXISTS likes (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+entity_id INTEGER NOT NULL,
+type VARCHAR(20) NOT NULL,
+created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+)");
+
+$database->query("CREATE INDEX entity_type_index ON likes (
+entity_id, type
+)");
+
 echo "Database schema initialized.\n";

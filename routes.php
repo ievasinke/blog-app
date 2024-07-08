@@ -7,6 +7,7 @@ use App\Controllers\Article\ShowArticleController;
 use App\Controllers\Article\UpdateArticleController;
 use App\Controllers\Comment\CreateCommentController;
 use App\Controllers\Comment\DeleteCommentController;
+use App\Controllers\Like\LikeController;
 
 return [
     ['GET', '/articles', [IndexArticleController::class, 'index']],
@@ -18,4 +19,5 @@ return [
     ['GET', '/articles/delete/{id:\d+}', [DeleteArticleController::class, 'delete']],
     ['POST', '/comments/create', [CreateCommentController::class, 'create']],
     ['POST', '/comments/delete/{id:\d+}', [DeleteCommentController::class, 'delete']],
+    ['POST', '/like', [LikeController::class, 'like']]
 ];
