@@ -23,13 +23,7 @@
             <div>
                 <h1 class="text-4xl font-bold mb-6">Comments</h1>
                 <div class="space-y-6">
-                    {% for comment in comments %}
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <p class="text-gray-700 font-bold">by {{ comment.name }}</p>
-                            <p class="mt-4 text-gray-600 whitespace-pre-wrap">{{ comment.content }}</p>
-                            <p class="text-sm text-gray-400 mt-2">Created at: {{ comment.createdAt.format('Y-m-d') }}</p>
-                        </div>
-                    {% endfor %}
+                    {% include 'comments/show.html.twig' %}
                 </div>
             </div>
 

@@ -13,5 +13,5 @@ interface CommentRepositoryInterface
     ): int;
     public function getComments(int $articleId): array;
     public function getComment(int $id): ?Comment;
-    public function markAsDeleted(int $id): void;
+    public function markAsDeleted(int $id): int;
 }

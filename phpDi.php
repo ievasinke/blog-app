@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use App\Controllers\Comment\DeleteCommentController;
 use App\Repositories\ArticleRepository;
 use App\Controllers\Article\CreateArticleController;
 use App\Controllers\Article\IndexArticleController;
@@ -16,6 +17,7 @@ use App\Repositories\Comment\CommentRepository;
 use App\Controllers\Comment\CreateCommentController;
 use App\Controllers\Comment\IndexCommentController;
 use App\Services\Comment\CreateCommentService;
+use App\Services\Comment\DeleteCommentService;
 use App\Services\Comment\IndexCommentService;
 use DI\ContainerBuilder;
 use Medoo\Medoo;
@@ -78,6 +80,11 @@ $containerBuilder->addDefinitions([
             DI\get(CommentRepositoryInterface::class),
             DI\get(Logger::class)
         ),
+    DeleteCommentService::class  => DI\create(DeleteCommentService::class)
+    ->constructor(
+        DI\get(CommentRepository::class),
+        DI\get(Logger::class)
+    ),
     IndexCommentService::class => DI\create(IndexCommentService::class)
         ->constructor(
             DI\get(CommentRepositoryInterface::class),
@@ -88,6 +95,7 @@ $containerBuilder->addDefinitions([
             DI\get(CreateCommentService::class),
             DI\get(Logger::class)
         ),
+    DeleteCommentController::class  => DI\autowire(DeleteCommentController::class),
     IndexCommentController::class => DI\autowire(IndexCommentController::class),
     ]);
 

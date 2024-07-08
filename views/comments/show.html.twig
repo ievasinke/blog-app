@@ -1,0 +1,17 @@
+<div class="space-y-6">
+    {% for comment in comments %}
+        <div class="relative bg-white p-6 rounded-lg shadow-md">
+            <p class="text-gray-700 font-bold">by {{ comment.name }}</p>
+            <p class="mt-4 text-gray-600 whitespace-pre-wrap">{{ comment.content }}</p>
+            <p class="text-sm text-gray-400 mt-2">Created at: {{ comment.createdAt.format('Y-m-d') }}</p>
+            <div class="absolute top-4 right-4">
+                <form action="/comments/delete/{{ comment.id }}" method="POST"
+                      class="absolute top-4 right-4">
+                    <button type="submit" class="text-red-500 hover:text-red-700 transition duration-200">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+</div>

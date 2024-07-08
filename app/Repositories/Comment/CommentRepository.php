@@ -53,11 +53,30 @@ class CommentRepository implements CommentRepositoryInterface
 
     public function getComment(int $id): ?Comment
     {
-        return null;
+        $commentData = $this->database->select(
+            'comments',
+            '*',
+            [
+                'id' => $id,
+                'deleted_at' => null,
+            ]
+        );
+        return $commentData ? $this->retrieveComment($commentData) : null;
     }
 
-    public function markAsDeleted(int $id): void
+    public function markAsDeleted(int $id): int
     {
+        $articleId = $this->getComment($id)->getArticleId();
+        $this->database->update(
+            'comments',
+            [
+                'deleted_at' => Carbon::now()->toIso8601String()
+            ],
+            [
+                'id' => $id,
+            ]
+        );
+        return $articleId;
     }
 
     private function retrieveComment(array $item): Comment
