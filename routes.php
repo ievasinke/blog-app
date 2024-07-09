@@ -15,7 +15,7 @@ return [
     ['GET', '/articles/create', [CreateArticleController::class, 'createForm']],
     ['POST', '/articles/create', [CreateArticleController::class, 'create']],
     ['GET', '/articles/update/{id:\d+}', [UpdateArticleController::class, 'updateForm']],
-    ['POST', '/articles/update/{id:\d+}', [UpdateArticleController::class, 'update']],
+    ['POST', '/articles/update', [UpdateArticleController::class, 'update']],
     ['GET', '/articles/delete/{id:\d+}', [DeleteArticleController::class, 'delete']],
     ['POST', '/comments/create', [CreateCommentController::class, 'create']],
     ['POST', '/comments/delete', [DeleteCommentController::class, 'delete']],

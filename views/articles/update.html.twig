@@ -3,7 +3,9 @@
 {% block content %}
     <h1 class="text-2xl font-bold mb-4">Edit Article</h1>
 
-    <form action="/articles/update/{{ article.id }}" method="POST">
+    <form action="/articles/update" method="POST">
+        <input type="hidden" name="type" value="article">
+        <input type="hidden" name="id" value="{{ article.id }}">
         <div class="mb-4">
             <label for="author" class="block text-gray-700 font-bold mb-2">Author:</label>
             <input type="text" id="author" name="author" value="{{ article.author }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
