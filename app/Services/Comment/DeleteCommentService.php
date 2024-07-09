@@ -23,7 +23,7 @@ class DeleteCommentService
     /**
      * @throws Exception
      */
-    public function deleteComment(int $id): int
+    public function deleteComment(int $id): void
     {
         $this->logger->info(
             'Attempting to delete comment',
@@ -38,7 +38,7 @@ class DeleteCommentService
                     'comment_id' => $id
                 ]
             );
-            return $this->commentRepository->markAsDeleted($id);
+            $this->commentRepository->markAsDeleted($id);
         } catch (Exception $e) {
             $this->logger->error(
                 'Error deleting comment id ' . $id,

@@ -18,6 +18,6 @@ return [
     ['POST', '/articles/update/{id:\d+}', [UpdateArticleController::class, 'update']],
     ['GET', '/articles/delete/{id:\d+}', [DeleteArticleController::class, 'delete']],
     ['POST', '/comments/create', [CreateCommentController::class, 'create']],
-    ['POST', '/comments/delete/{id:\d+}', [DeleteCommentController::class, 'delete']],
+    ['POST', '/comments/delete', [DeleteCommentController::class, 'delete']],
     ['POST', '/like', [LikeController::class, 'like']]
 ];

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Repositories\Comment;
 
@@ -64,9 +64,8 @@ class CommentRepository implements CommentRepositoryInterface
         return $commentData ? $this->retrieveComment($commentData) : null;
     }
 
-    public function markAsDeleted(int $id): int
+    public function markAsDeleted(int $id): void
     {
-        $articleId = $this->getComment($id)->getArticleId();
         $this->database->update(
             'comments',
             [
@@ -76,7 +75,6 @@ class CommentRepository implements CommentRepositoryInterface
                 'id' => $id,
             ]
         );
-        return $articleId;
     }
 
     private function retrieveComment(array $item): Comment

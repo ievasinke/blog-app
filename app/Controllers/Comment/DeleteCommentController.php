@@ -18,9 +18,11 @@ class DeleteCommentController
     /**
      * @throws Exception
      */
-    public function delete(int $id): RedirectResponse
+    public function delete(): RedirectResponse
     {
-        $articleId = $this->deleteCommentService->deleteComment($id);
+        $articleId = $_POST['article_id'];
+        $commentId = $_POST['comment_id'];
+        $this->deleteCommentService->deleteComment((int) $commentId);
         return new RedirectResponse('/articles/' . $articleId);
     }
 }
