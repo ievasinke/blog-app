@@ -1,6 +1,6 @@
 {% block content %}
     <h2 class="text-2xl font-bold mb-4">Add a Comment</h2>
-    <form action="/comments/create" method="post" class="bg-white p-6 rounded-lg shadow-md">
+    <form action="/comments/create" method="POST" class="bg-white p-6 rounded-lg shadow-md">
         <input type="hidden" name="article_id" value="{{ article.id }}">
         <div class="mb-4">
             <label for="name" class="block text-gray-700 font-bold mb-2">Name:</label>
