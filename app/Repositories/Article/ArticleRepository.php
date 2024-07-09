@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace App\Repositories;
+namespace App\Repositories\Article;
 
 use App\Models\Article;
 use Carbon\Carbon;
 use Medoo\Medoo;
 
-class ArticleRepository
+class ArticleRepository implements ArticleRepositoryInterface
 {
     private Medoo $database;
 

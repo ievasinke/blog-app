@@ -2,7 +2,7 @@
 
 namespace App\Services\Article;
 
-use App\Repositories\ArticleRepository;
+use App\Repositories\Article\ArticleRepository;
 use Exception;
 use Monolog\Logger;
 

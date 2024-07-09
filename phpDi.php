@@ -1,21 +1,22 @@
 <?php declare(strict_types=1);
 
-use App\Controllers\Comment\DeleteCommentController;
-use App\Repositories\ArticleRepository;
 use App\Controllers\Article\CreateArticleController;
+use App\Controllers\Article\DeleteArticleController;
 use App\Controllers\Article\IndexArticleController;
 use App\Controllers\Article\ShowArticleController;
 use App\Controllers\Article\UpdateArticleController;
-use App\Controllers\Article\DeleteArticleController;
+use App\Controllers\Comment\CreateCommentController;
+use App\Controllers\Comment\DeleteCommentController;
+use App\Controllers\Comment\IndexCommentController;
+use App\Repositories\Article\ArticleRepository;
+use App\Repositories\Article\ArticleRepositoryInterface;
+use App\Repositories\Comment\CommentRepository;
+use App\Repositories\Comment\CommentRepositoryInterface;
 use App\Services\Article\CreateArticleService;
-use App\Services\Article\ShowArticleService;
-use App\Services\Article\UpdateArticleService;
 use App\Services\Article\DeleteArticleService;
 use App\Services\Article\IndexArticleService;
-use App\Repositories\Comment\CommentRepositoryInterface;
-use App\Repositories\Comment\CommentRepository;
-use App\Controllers\Comment\CreateCommentController;
-use App\Controllers\Comment\IndexCommentController;
+use App\Services\Article\ShowArticleService;
+use App\Services\Article\UpdateArticleService;
 use App\Services\Comment\CreateCommentService;
 use App\Services\Comment\DeleteCommentService;
 use App\Services\Comment\IndexCommentService;
@@ -42,6 +43,7 @@ $containerBuilder->addDefinitions([
             ));
         return $log;
     },
+    ArticleRepositoryInterface::class  => DI\get(ArticleRepository::class),
     ArticleRepository::class => DI\autowire(ArticleRepository::class),
     CreateArticleService::class => DI\create(CreateArticleService::class)
         ->constructor(

@@ -3,7 +3,7 @@
 namespace App\Services\Article;
 
 use App\Models\Article;
-use App\Repositories\ArticleRepository;
+use App\Repositories\Article\ArticleRepository;
 use Exception;
 use Monolog\Logger;
 
