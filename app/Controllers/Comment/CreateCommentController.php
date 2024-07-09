@@ -46,6 +46,13 @@ class CreateCommentController
         }
 
         try {
+            $this->logger->info(
+                'Attempting to create comment on article' .  $articleId,
+                [
+                    'article_id' => $articleId,
+                    'content' => $content,
+                    'name' => $name
+                ]);
             $commentId = $this->createCommentService->createComment(
                 (int)$articleId,
                 $content,

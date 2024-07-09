@@ -10,6 +10,9 @@
     <title>Welcome to the blog app</title>
 </head>
 <body class="bg-white">
+{% if error %}
+<div class="bg-pink">{{ error }}</div>
+{% endif %}
 <nav class="bg-white shadow-md">
     <div class="container mx-auto px-4">
         <div class="flex items-center justify-between h-16">

@@ -29,32 +29,29 @@ class CreateCommentService
         string $name
     ): int
     {
-        $this->logger->info(
-            'Attempting to create comment on article' .  $articleId,
-            [
-                'article_id' => $articleId,
-                'content' => $content,
-                'name' => $name
-            ]);
-        try {
+
+//        try {
             $result = $this->commentRepository->create(
                 $articleId,
                 $content,
                 $name
             );
-            $this->logger->info(
-                'Comment created successfully',
-                ['comment id' => $result]
-            );
+            if ($result === 0) {
+                throw new Exception('Unable to create comment');
+            }
+//            $this->logger->info(
+//                'Comment created successfully',
+//                ['comment id' => $result]
+//            );
             return $result;
-        } catch (Exception $e) {
-            $this->logger->error(
-                'Error creating comment',
-                [
-                    'exception_message' => $e->getMessage(),
-                    'exception_stack' => $e->getTraceAsString()
-                ]);
-            throw $e;
-        }
+//        } catch (Exception $e) {
+//            $this->logger->error(
+//                'Error creating comment',
+//                [
+//                    'exception_message' => $e->getMessage(),
+//                    'exception_stack' => $e->getTraceAsString()
+//                ]);
+//            throw $e;
+//        }
     }
 }

@@ -30,6 +30,9 @@ class CommentRepository implements CommentRepositoryInterface
                 'created_at' => Carbon::now()->toISO8601String(),
             ]
         );
+        if ($this->database->error) {
+            return 0;
+        }
         return (int)$this->database->id();
     }
 
