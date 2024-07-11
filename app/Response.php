@@ -23,6 +23,9 @@ class Response
 
     public function getData(): array
     {
+        if (!empty($_GET['error'])) {
+            $this->data['error'] = $_GET['error'];
+        }
         return $this->data;
     }
 }

@@ -10,9 +10,6 @@
     <title>Welcome to the blog app</title>
 </head>
 <body class="bg-white">
-{% if error %}
-<div class="bg-pink">{{ error }}</div>
-{% endif %}
 <nav class="bg-white shadow-md">
     <div class="container mx-auto px-4">
         <div class="flex items-center justify-between h-16">
@@ -26,6 +23,9 @@
         </div>
     </div>
 </nav>
+{% if error %}
+    <div class="container mx-auto px-4 py-2 bg-purple-200">{{ error }}</div>
+{% endif %}
 <div class="container mx-auto px-4 py-6">
     {% block content %}{% endblock %}
 </div>

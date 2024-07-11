@@ -49,7 +49,7 @@ class UpdateArticleController
         $title = (string)$_POST['title'] ?? null;
         $content = (string)$_POST['content'] ?? null;
 
-        if (empty($id) || empty($author) || empty($tile) || empty($content)) {
+        if (empty($id) || empty($author) || empty($title) || empty($content)) {
             $errorMessage = 'All fields are required.';
             $this->logger->error('Error updating article: ' . $errorMessage);
             return new RedirectResponse('/articles/' . $id . '?error=' . urlencode($errorMessage));
