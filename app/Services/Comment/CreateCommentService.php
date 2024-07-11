@@ -2,56 +2,39 @@
 
 namespace App\Services\Comment;
 
+use App\Repositories\Comment\CommentRepository;
 use App\Repositories\Comment\CommentRepositoryInterface;
 use Exception;
-use Monolog\Logger;
 
 class CreateCommentService
 {
-    private CommentRepositoryInterface $commentRepository;
-    private Logger $logger;
+    protected $commentRepository;
 
     public function __construct(
-        CommentRepositoryInterface $commentRepository,
-        Logger            $logger
+        CommentRepositoryInterface $commentRepository
     )
     {
         $this->commentRepository = $commentRepository;
-        $this->logger = $logger;
     }
 
     /**
      * @throws Exception
      */
     public function createComment(
-        int $articleId,
+        int    $articleId,
         string $content,
         string $name
     ): int
     {
-
-//        try {
-            $result = $this->commentRepository->create(
-                $articleId,
-                $content,
-                $name
-            );
-            if ($result === 0) {
-                throw new Exception('Unable to create comment');
-            }
-//            $this->logger->info(
-//                'Comment created successfully',
-//                ['comment id' => $result]
-//            );
-            return $result;
-//        } catch (Exception $e) {
-//            $this->logger->error(
-//                'Error creating comment',
-//                [
-//                    'exception_message' => $e->getMessage(),
-//                    'exception_stack' => $e->getTraceAsString()
-//                ]);
-//            throw $e;
-//        }
+        //return 0;
+        $result = $this->commentRepository->create(
+            $articleId,
+            $content,
+            $name
+        );
+        if ($result === 0) {
+            throw new Exception('Unable to create comment');
+        }
+        return $result;
     }
 }

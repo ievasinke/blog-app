@@ -14,7 +14,7 @@ class ShowArticleController
 
     public function __construct(
         ShowArticleService  $showArticleService,
-        IndexCommentService $indexCommentService,
+        IndexCommentService $indexCommentService
     )
     {
         $this->showArticleService = $showArticleService;

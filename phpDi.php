@@ -24,6 +24,8 @@ use DI\ContainerBuilder;
 use Medoo\Medoo;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use function DI\create;
+use function DI\get;
 
 $containerBuilder = new ContainerBuilder();
 
@@ -40,65 +42,30 @@ $containerBuilder->addDefinitions([
         $log->pushHandler(new StreamHandler(
             $logFile,
             Logger::DEBUG
-            ));
+        ));
         return $log;
     },
-    ArticleRepositoryInterface::class  => DI\get(ArticleRepository::class),
-    ArticleRepository::class => DI\autowire(ArticleRepository::class),
-    CreateArticleService::class => DI\create(CreateArticleService::class)
-        ->constructor(
-            DI\get(ArticleRepository::class),
-            DI\get(Logger::class)
-        ),
-    DeleteArticleService::class => DI\create(DeleteArticleService::class)
-        ->constructor(
-            DI\get(ArticleRepository::class),
-            DI\get(Logger::class)
-        ),
-    IndexArticleService::class => DI\create(IndexArticleService::class)
-        ->constructor(
-            DI\get(ArticleRepository::class),
-            DI\get(Logger::class)
-        ),
-    ShowArticleService::class => DI\create(ShowArticleService::class)
-        ->constructor(
-            DI\get(ArticleRepository::class),
-            DI\get(Logger::class)
-        ),
-    UpdateArticleService::class => DI\create(UpdateArticleService::class)
-        ->constructor(
-            DI\get(ArticleRepository::class),
-            DI\get(Logger::class)
-        ),
-    IndexArticleController::class => DI\autowire(IndexArticleController::class),
-    ShowArticleController::class => DI\autowire(ShowArticleController::class),
-    CreateArticleController::class => DI\autowire(CreateArticleController::class),
-    UpdateArticleController::class => DI\autowire(UpdateArticleController::class),
-    DeleteArticleController::class => DI\autowire(DeleteArticleController::class),
-    CommentRepositoryInterface::class => DI\autowire(CommentRepository::class),
-    CommentRepository::class => DI\autowire(CommentRepository::class),
-    CreateCommentService::class  => DI\create(CreateCommentService::class)
-        ->constructor(
-            DI\get(CommentRepositoryInterface::class),
-            DI\get(Logger::class)
-        ),
-    DeleteCommentService::class  => DI\create(DeleteCommentService::class)
-    ->constructor(
-        DI\get(CommentRepository::class),
-        DI\get(Logger::class)
-    ),
-    IndexCommentService::class => DI\create(IndexCommentService::class)
-        ->constructor(
-            DI\get(CommentRepositoryInterface::class),
-            DI\get(Logger::class)
-        ),
-    CreateCommentController::class  => DI\create(CreateCommentController::class)
-        ->constructor(
-            DI\get(CreateCommentService::class),
-            DI\get(Logger::class)
-        ),
-    DeleteCommentController::class  => DI\autowire(DeleteCommentController::class),
-    IndexCommentController::class => DI\autowire(IndexCommentController::class),
-    ]);
+    ArticleRepositoryInterface::class => create(ArticleRepository::class)
+        ->constructor(get(Medoo::class)),
+    'createArticleService' => create(CreateArticleService::class),
+    'deleteArticleService' => create(DeleteArticleService::class),
+    'indexArticleService' => create(IndexArticleService::class),
+    'showArticleService' => create(ShowArticleService::class),
+    'updateArticleService' => create(UpdateArticleService::class),
+    'showArticleController' => create(ShowArticleController::class),
+    'indexArticleController' => create(IndexArticleController::class),
+    'createArticleController' => create(CreateArticleController::class),
+    'updateArticleController' => create(UpdateArticleController::class),
+    'deleteArticleController' => create(DeleteArticleController::class),
+    CommentRepositoryInterface::class => create(CommentRepository::class)
+        ->constructor(get(Medoo::class)),
+    'createCommentService' => create(CreateCommentService::class),
+    'deleteCommentService' => create(DeleteCommentService::class),
+    'indexCommentService' => create(IndexCommentService::class),
+    'createCommentController' => create(CreateCommentController::class),
+    'deleteCommentController' => create(DeleteCommentController::class),
+    'indexCommentController' => create(IndexCommentController::class),
+]);
 
-return $containerBuilder->build();
+$container = $containerBuilder->build();
+return $container;

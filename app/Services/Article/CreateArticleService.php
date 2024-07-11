@@ -2,17 +2,17 @@
 
 namespace App\Services\Article;
 
-use App\Repositories\Article\ArticleRepository;
+use App\Repositories\Article\ArticleRepositoryInterface;
 use Exception;
 use Monolog\Logger;
 
 class CreateArticleService
 {
-    private ArticleRepository $articleRepository;
+    private ArticleRepositoryInterface $articleRepository;
     private Logger $logger;
 
     public function __construct(
-        ArticleRepository $articleRepository,
+        ArticleRepositoryInterface $articleRepository,
         Logger            $logger
     )
     {
