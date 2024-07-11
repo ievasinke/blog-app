@@ -10,13 +10,16 @@ class Comment
     private int $articleId;
     private string $content;
     private string $name;
+    private int $likeCount;
     private Carbon $createdAt;
     private ?Carbon $deletedAt;
 
     public function __construct(
-        int $id, int $articleId,
+        int $id,
+        int $articleId,
         string $content,
         string $name,
+        int $likeCount,
         ?Carbon $createdAt = null,
         ?Carbon $deletedAt = null
     )
@@ -25,6 +28,7 @@ class Comment
         $this->articleId = $articleId;
         $this->content = $content;
         $this->name = $name;
+        $this->likeCount = $likeCount;
         $this->createdAt = $createdAt ? Carbon::parse($createdAt) : Carbon::now();
         $this->deletedAt = $deletedAt ? Carbon::parse($deletedAt) : null;
     }
@@ -47,6 +51,11 @@ class Comment
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getLikeCount(): int
+    {
+        return $this->likeCount;
     }
 
     public function getCreatedAt(): Carbon

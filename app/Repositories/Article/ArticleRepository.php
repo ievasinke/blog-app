@@ -104,6 +104,7 @@ class ArticleRepository implements ArticleRepositoryInterface
             $item['author'],
             $item['title'],
             $item['content'],
+            (int)$item['like_count'],
             Carbon::parse($item['created_at']),
             Carbon::parse($item['updated_at']),
             Carbon::parse($item['deleted_at'])

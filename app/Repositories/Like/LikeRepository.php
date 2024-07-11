@@ -26,19 +26,29 @@ class LikeRepository implements LikeRepositoryInterface
                 'created_at' => Carbon::now()->toIso8601String(),
             ]
         );
+
+        if ($type === 'article') {
+            $this->incrementArticleLikeCount($entityId);
+        } elseif ($type === 'comment') {
+            $this->incrementCommentLikeCount($entityId);
+        }
     }
 
-    public function getLikeCount(
-        int    $entityId,
-        string $type
-    ): int
+    private function incrementArticleLikeCount(int $articleId): void
     {
-        return $this->database->count(
-            'likes',
-            [
-                'entity_id' => $entityId,
-                'type' => $type,
-            ]
+        $this->database->update(
+            'articles',
+            ['like_count[+]' => 1],
+            ['id' => $articleId]
+        );
+    }
+
+    private function incrementCommentLikeCount(int $commentId): void
+    {
+        $this->database->update(
+            'comments',
+            ['like_count[+]' => 1],
+            ['id' => $commentId]
         );
     }
 }

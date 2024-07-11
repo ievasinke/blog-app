@@ -20,12 +20,4 @@ class LikeService
     {
         $this->likeRepository->create($entityId, $type);
     }
-
-    public function getLikeCount(
-        int $entityId,
-        string $type
-    ): int
-    {
-        return $this->likeRepository->getLikeCount($entityId, $type);
-    }
 }

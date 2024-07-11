@@ -10,6 +10,7 @@ class Article
     private string $author;
     private string $title;
     private string $content;
+    private int $likeCount;
     private Carbon $createdAt;
     private ?Carbon $updatedAt;
     private ?Carbon $deletedAt;
@@ -19,6 +20,7 @@ class Article
         string  $author,
         string  $title,
         string  $content,
+        int     $likeCount,
         ?Carbon $createdAt = null,
         ?Carbon $updatedAt = null,
         ?Carbon $deletedAt = null
@@ -28,6 +30,7 @@ class Article
         $this->author = $author;
         $this->title = $title;
         $this->content = $content;
+        $this->likeCount = $likeCount;
         $this->createdAt = $createdAt ? Carbon::parse($createdAt) : Carbon::now();
         $this->updatedAt = $updatedAt ? Carbon::parse($updatedAt) : null;
         $this->deletedAt = $deletedAt ? Carbon::parse($deletedAt) : null;
@@ -51,6 +54,11 @@ class Article
     public function getContent(): string
     {
         return $this->content;
+    }
+
+    public function getLikeCount(): int
+    {
+        return $this->likeCount;
     }
 
     public function getCreatedAt(): Carbon

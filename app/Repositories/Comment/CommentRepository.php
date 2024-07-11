@@ -91,6 +91,7 @@ class CommentRepository implements CommentRepositoryInterface
             (int)$item['article_id'],
             $item['content'],
             $item['name'],
+            (int)$item['like_count'],
             Carbon::parse($item['created_at']),
             Carbon::parse($item['deleted_at'])
         );
