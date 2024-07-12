@@ -8,9 +8,4 @@ interface LikeRepositoryInterface
         int $entityId,
         string $type
     ): void;
-
-//    public function getLikeCount(
-//        int $entityId,
-//        string $type
-//    ): int;
 }
