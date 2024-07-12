@@ -3,17 +3,19 @@
 namespace App\Services\Article;
 
 use App\Repositories\Article\ArticleRepositoryInterface;
+use App\Repositories\Exceptions\FailedInsertIntoDatabaseException;
+use App\Services\Exceptions\FailedToCreateArticleException;
 use Exception;
-use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 
 class CreateArticleService
 {
     private ArticleRepositoryInterface $articleRepository;
-    private Logger $logger;
+    private LoggerInterface $logger;
 
     public function __construct(
         ArticleRepositoryInterface $articleRepository,
-        Logger            $logger
+        LoggerInterface            $logger
     )
     {
         $this->articleRepository = $articleRepository;
@@ -46,14 +48,12 @@ class CreateArticleService
                 ['article id' => $result]
             );
             return $result;
-        } catch (Exception $e) {
-            $this->logger->error(
-                'Error creating article',
-                [
-                    'exception_message' => $e->getMessage(),
-                    'exception_stack' => $e->getTraceAsString()
-                ]);
-            throw $e;
+        } catch (FailedInsertIntoDatabaseException $exception) {
+            throw new FailedToCreateArticleException(
+                "Can't create article", //$exception->getMessage();
+                $exception->getCode(),
+                $exception
+            );
         }
     }
 }

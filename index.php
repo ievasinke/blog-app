@@ -4,6 +4,8 @@ require_once 'vendor/autoload.php';
 
 use App\RedirectResponse;
 use App\Response;
+use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -29,6 +31,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
 });
 
 $container = require 'phpDi.php';
+
+$logger = LoggerInterface::class;
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
@@ -67,9 +71,14 @@ switch ($routeInfo[0]) {
          ** @var RedirectResponse $response
          **/
 
-        $response = $controllerInstance->$method(...array_values($vars));
         try {
+            $response = $controllerInstance->$method(...array_values($vars));
+        } catch (Exception $exception) {
+            $logger->error($exception);
 
+            echo $twig->render('errors/500.html.twig');
+        }
+        try {
             if ($response instanceof Response) {
                 echo $twig->render(
                     $response->getTemplate() . '.html.twig',
@@ -78,12 +87,11 @@ switch ($routeInfo[0]) {
             }
 
             if ($response instanceof RedirectResponse) {
-                var_dump($response->getLocation());
                 header('Location: ' . $response->getLocation());
             }
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             echo ':?';
-            echo $e->getMessage();
+            $logger->error($e);
         }
         break;
 }

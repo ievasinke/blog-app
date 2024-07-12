@@ -3,7 +3,9 @@
 namespace App\Repositories\Article;
 
 use App\Models\Article;
+use App\Repositories\Exceptions\FailedInsertIntoDatabaseException;
 use Carbon\Carbon;
+use Exception;
 use Medoo\Medoo;
 
 class ArticleRepository implements ArticleRepositoryInterface
@@ -21,16 +23,23 @@ class ArticleRepository implements ArticleRepositoryInterface
         string $content
     ): int
     {
-        $this->database->insert(
-            'articles',
-            [
-                'author' => $author,
-                'title' => $title,
-                'content' => $content,
-                'created_at' => Carbon::now()->toIso8601String(),
-            ]
-        );
-        return (int)$this->database->id();
+        try {
+            $this->database->insert(
+                'articles',
+                [
+                    'author' => $author,
+                    'title' => $title,
+                    'content' => $content,
+                    'created_at' => Carbon::now()->toIso8601String(),
+                ]
+            );
+            return (int)$this->database->id();
+        } catch (Exception $exception) {
+            throw new FailedInsertIntoDatabaseException(
+                "[Articles] Failed to insert article \"$title\"",
+                500,
+                $exception);
+        }
     }
 
     public function getArticles(): array

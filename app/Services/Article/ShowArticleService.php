@@ -6,11 +6,12 @@ use App\Models\Article;
 use App\Repositories\Article\ArticleRepository;
 use Exception;
 use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 
 class ShowArticleService
 {
     private ArticleRepository $articleRepository;
-    private Logger $logger;
+    private LoggerInterface $logger;
 
     public function __construct(
         ArticleRepository $articleRepository,
